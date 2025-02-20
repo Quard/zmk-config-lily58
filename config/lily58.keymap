@@ -1,15 +1,10 @@
 #include <behaviors.dtsi>
-#include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/keys.h>
 
-&mt {
-    tapping-term-ms = <150>;
-};
+&mt { tapping-term-ms = <125>; };
 
-&lt {
-    tapping-term-ms = <150>;
-};
-
+&lt { tapping-term-ms = <125>; };
 
 / {
     behaviors {
@@ -20,38 +15,41 @@
             bindings = <&mt LEFT_SHIFT SPACE>, <&kp CAPSLOCK>;
         };
 
-        sticky_win: sticky_win {
+        autofill: autofill {
             compatible = "zmk,behavior-tap-dance";
-            label = "STICK_WIN";
+            label = "AUTOFILL";
             #binding-cells = <0>;
-            bindings = <&mt LCTRL LEFT_WIN>, <&sk LEFT_WIN>;
+            bindings = <&none>, <&none>;
         };
     };
 
     keymap {
         compatible = "zmk,keymap";
 
-        layer_0 {
+        layer_base {
+            display-name = "Base";
             bindings = <
-&kp ESC    &kp N1  &kp N2  &kp N3    &kp N4              &kp N5                                &kp N6         &kp N7  &kp N8     &kp N9   &kp N0    &kp MINUS
-&kp GRAVE  &kp Q   &kp W   &kp E     &kp R               &kp T                                 &kp Y          &kp U   &kp I      &kp O    &kp P     &kp EQUAL
-&kp LSHFT  &kp A   &kp S   &kp D     &kp F               &kp G                                 &kp H          &kp J   &kp K      &kp L    &kp SEMI  &kp SQT
-&kp LCTRL  &kp Z   &kp X   &kp C     &kp V               &kp B       &kp LBKT     &kp RBKT     &kp N          &kp M   &kp COMMA  &kp DOT  &kp FSLH  &kp RSHFT
-                           &kp LALT  &sticky_win &caps_lock  &lt 1 TAB    &lt 2 ENTER  &kp BACKSPACE  &kp DELETE &trans
+&kp ESC    &kp N1          &kp N2          &kp N3       &kp N4            &kp N5                                &kp N6         &kp N7             &kp N8       &kp N9           &kp N0              &kp MINUS
+&kp GRAVE  &kp Q           &kp W           &kp E        &kp R             &kp T                                 &kp Y          &kp U              &kp I        &kp O            &kp P               &kp EQUAL
+&kp LSHFT  &mt LEFT_WIN A  &mt LEFT_ALT S  &mt LCTRL D  &mt LEFT_SHIFT F  &kp G                                 &kp H          &mt RIGHT_SHIFT J  &mt RCTRL K  &mt RIGHT_ALT L  &mt RIGHT_WIN SEMI  &kp SQT
+&kp LCTRL  &kp Z           &kp X           &kp C        &kp V             &kp B       &kp LBKT     &kp RBKT     &kp N          &kp M              &kp COMMA    &kp DOT          &kp FSLH            &kp RSHFT
+                                           &kp GRAVE    &kp ESCAPE        &caps_lock  &lt 1 TAB    &lt 2 ENTER  &kp BACKSPACE  &kp DELETE         &autofill
             >;
         };
 
-        layer_1 {
+        layer_fn {
+            display-name = "Func";
             bindings = <
-&kp F1      &kp F2        &kp F3        &kp F4        &kp F5        &kp F6                              &kp F7  &kp F8  &kp F9  &kp F10  &kp F11  &kp F12
-&kp K_MUTE  &kp C_VOL_DN  &kp C_VOL_UP  &kp C_BRI_DN  &kp C_BRI_UP  &trans                              &trans  &trans  &trans  &trans   &trans   &trans
-&trans      &trans        &trans        &trans        &trans        &trans                              &trans  &trans  &trans  &trans   &trans   &trans
-&bt BT_CLR  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4  &kp C_PLAY_PAUSE    &trans  &trans  &trans  &trans  &trans   &trans   &trans
-                                        &trans        &trans        &trans  &trans              &trans  &trans  &trans  &trans
+&kp F1      &kp F2        &kp F3        &kp F4        &kp F5        &kp F6                                    &kp F7  &kp F8  &kp F9  &kp F10  &kp F11        &kp F12
+&kp K_MUTE  &kp C_VOL_DN  &kp C_VOL_UP  &kp C_BRI_DN  &kp C_BRI_UP  &trans                                    &trans  &trans  &trans  &trans   &trans         &trans
+&trans      &trans        &trans        &trans        &trans        &trans                                    &trans  &trans  &trans  &trans   &trans         &trans
+&bt BT_CLR  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4  &kp C_PLAY_PAUSE    &trans  &trans  &trans  &trans  &trans   &kp BACKSLASH  &trans
+                                        &trans        &trans        &trans        &trans              &trans  &trans  &trans  &trans
             >;
         };
 
-        layer_2 {
+        layer_nav {
+            display-name = "Nav";
             bindings = <
 &trans  &trans  &trans  &trans  &trans  &trans                    &trans      &trans      &trans       &trans      &trans      &trans
 &trans  &trans  &trans  &trans  &trans  &trans                    &trans      &kp K_UNDO  &kp K_PASTE  &kp K_COPY  &kp K_REDO  &trans
@@ -60,5 +58,8 @@
                         &trans  &trans  &trans  &trans    &trans  &trans      &trans      &trans
             >;
         };
+
+        layer_01 { status = "reserved"; };
+        layer_02 { status = "reserved"; };
     };
 };
